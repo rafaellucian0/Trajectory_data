@@ -11,8 +11,6 @@ def isdigit(input):
     return True
 
 def write_file(bus_points, day): 
-    #criar dataframe
-    #se o timestamp do item for de acordo com o timestamp da pasta, ele é adicionado ao dataframe
     path = rf"C:\Users\Rafael\Desktop\Rafael\UFAL\PIBIC\BRBus\Trajectory_data\trajectory_528\{day[:10]}"
     tam = 0
     if not os.path.exists(path):
@@ -20,25 +18,12 @@ def write_file(bus_points, day):
     get_time = day[11:13]+day[-1]
 
     #if not os.path.exists(f"{path}\\cur_{get_time}"):
-        # Define o nome do arquivo Parquet
     filename = os.path.join(path, f'cur_{get_time}.parquet')
     
-    # Cria um DataFrame com os dados de 'i'
     df = pd.DataFrame(bus_points)
-    
-    # Salva o DataFrame em um arquivo Parquet
+
     df.to_parquet(filename)
     
-    #else:
-        #existente = pd.read_parquet(f"{path}\\cur_{get_time}")
-        # Concatena o DataFrame existente com o DataFrame acumulado
-        #df_new = pd.DataFrame(bus_points)
-    
-        # Concatenar o DataFrame existente com o novo DataFrame
-        #concatenado = pd.concat([existente, df_new], ignore_index=True)
-        
-        # Salvar o DataFrame resultante de volta no arquivo Parquet original
-        #concatenado.to_parquet(f"{path}\\cur_{get_time}")
     tam+=1
 
 
