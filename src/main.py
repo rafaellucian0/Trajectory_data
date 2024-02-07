@@ -29,42 +29,38 @@ def convert_to_trajectory(path):
     size = 1
     bus_points = {}
 
-    size = 1
     for item in csv_files:
-        if size<5000:
-            #transforma cada csv em df
-            file_path = os.path.join(path, item)
-            file = pd.read_csv(file_path)
-            for index, row in file.iterrows():
-                Semantica = []
+        #transforma cada csv em df
+        file_path = os.path.join(path, item)
+        file = pd.read_csv(file_path)
+        for index, row in file.iterrows():
+            Semantica = []
 
-                loc = [row['latitude'], row['longitude']]
-                #x = row['latitude']
-                #y = row['longitude']
+            loc = [row['latitude'], row['longitude']]
+            #x = row['latitude']
+            #y = row['longitude']
 
-                #verifica se tem a info da velocidade
-                if isdigit(row['bus_speed']):
-                    Semantica.append("speed: "+ str(int(row['bus_speed'])))
+            #verifica se tem a info da velocidade
+            if isdigit(row['bus_speed']):
+                Semantica.append("speed: "+ str(int(row['bus_speed'])))
 
-                #verifica se tem a info da direcao
-                if isdigit(row['bus_direction']):
-                    Semantica.append("direction: "+ str(int(row['bus_direction'])))
-                
-                Semantica.append(str(row['updated_at']))
+            #verifica se tem a info da direcao
+            if isdigit(row['bus_direction']):
+                Semantica.append("direction: "+ str(int(row['bus_direction'])))
+            
+            Semantica.append(str(row['updated_at']))
 
-                #junta todos os atributos no formato P = (id, loc, semantica), o id do onibus é só para separar o arquivo depois
-                point = (row['bus_id'], loc, Semantica)
+            #junta todos os atributos no formato P = (id, loc, semantica), o id do onibus é só para separar o arquivo depois
+            point = (row['bus_id'], loc, Semantica)
 
-                key = (row['updated_at'])[:15]
+            key = (row['updated_at'])[:15]
 
-                if key in bus_points:
-                    bus_points[key].append(point)
-                else:
-                    bus_points[key] = [point]
-            print(size)
-            size+=1
-        else:
-            break
+            if key in bus_points:
+                bus_points[key].append(point)
+            else:
+                bus_points[key] = [point]
+        print(size)
+        size+=1
     write_file(bus_points)
 
 convert_to_trajectory(r"C:\Users\Rafael\Downloads\curitiba")
