@@ -13,45 +13,26 @@ def isdigit(input):
 def write_file(bus_points): 
     #PARQUET
 
-    for key in bus_points:
-        path = rf"C:\Users\Rafael\Desktop\Rafael\UFAL\PIBIC\BRBus\Trajectory_data\trajectories_bus\curitiba"
-        if not os.path.exists(path):
-            os.makedirs(path)
-        filename = os.path.join(path, f'{key}.parquet')
+    # for key in bus_points:
+    #     path = rf"path"
+    #     if not os.path.exists(path):
+    #         os.makedirs(path)
+    #     filename = os.path.join(path, f'{key}.parquet')
 
-        df = pd.DataFrame(bus_points[key])
+    #     df = pd.DataFrame(bus_points[key])
 
-        df.to_parquet(filename)
+    #     df.to_parquet(filename)
 
     #CSV
-    #header = ['id', 'x', 'y', 'Semantica']
-    #path = rf"C:\Users\Rafael\Desktop\Rafael\UFAL\PIBIC\BRBus\Trajectory_data\csv_file"
+    header = ['x', 'y', 'timestamp', 'semantica']
+    path = rf"path"
 
-    #for key in bus_points:
-        #id = 1
+    for key in bus_points:
 
-        #define o local de salvamento do arquivo
-        #filename = os.path.join(path, f'{key}.csv') 
+        filename = os.path.join(path, f'{key}.csv')
+        df = pd.DataFrame(bus_points[key], columns=header)
 
-        #with open(filename, 'w', newline="") as file:
-            #escreve info no csv
-            #csvwriter = csv.writer(file)
-            #csvwriter.writerow(header)
-            #id = 1
-            #x_last = ""
-            #y_last = ""
-            #for point in bus_points[key]:
-                #print(point)
-                #return 0
-                #if point[0]!=x_last or y!=y_last:
-                    #for i in point[1]:
-                        #if i[:4]=='2023':
-                            #time = i[8:10]+'/'+i[5:7]+'/'+i[:4]+' '+i[11:19]
-                    #new_point = [id, float(x), float(y), time]
-                    #csvwriter.writerow(new_point)
-                    #id += 1 
-                    #x_last=x
-                    #y_last=y
+        df.to_csv(filename, sep=';', index=True, index_label='id')
 
 
 def convert_to_trajectory(path):
@@ -103,4 +84,4 @@ def convert_to_trajectory(path):
     #print(bus_points)
     write_file(bus_points)
 
-convert_to_trajectory(r"C:\Users\Rafael\Downloads\curitiba")
+convert_to_trajectory(r"path")
